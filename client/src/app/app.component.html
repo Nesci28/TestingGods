@@ -1,0 +1,11 @@
+<app-sidebar (openedEvent)="openedEvent($event)"></app-sidebar>
+
+<Particles
+  class="position-fixed vw-100 vh-100 overflow-hidden"
+  id="tsparticles"
+  [options]="particlesOptions"
+></Particles>
+
+<div class="main">
+  <router-outlet></router-outlet>
+</div>

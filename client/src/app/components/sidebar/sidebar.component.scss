@@ -1,0 +1,30 @@
+@import "../../../scss/variables";
+
+a {
+  color: $secondary;
+  text-decoration: none;
+  display: block;
+}
+
+p {
+  color: $light;
+}
+
+.img-open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider {
+  width: 100%;
+  height: 3px;
+  background-color: $secondary;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  &-secondary {
+    height: 2px;
+    background-color: darken($light, 25%);
+  }
+}

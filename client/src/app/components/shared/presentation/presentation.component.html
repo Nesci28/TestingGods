@@ -1,0 +1,189 @@
+<div
+  #presentationDiv
+  style="width: 100%;"
+  [ngStyle]="{ 'height.px': presentationHeight }"
+  class="bg-dark"
+  appControls
+  (pageAction)="navigate($event)"
+  (videoAction)="playPause()"
+>
+  <div
+    class="page"
+    [ngStyle]="{
+      background: 'url(' + background + ') center center/cover no-repeat'
+    }"
+  >
+    <div
+      *ngIf="pageConfigs[page]?.meta?.type === _PageTypes.TITLE"
+      class="text-overlay px-3"
+    >
+      <video
+        *ngIf="video"
+        [autoplay]="autoplay"
+        muted
+        [loop]="loop"
+        class="video"
+        id="video"
+        height="auto"
+        width="auto"
+        (ended)="videoEnd()"
+        (click)="playPause()"
+      >
+        <source [src]="video" type="video/webm" />
+      </video>
+      <div
+        class="d-flex flex-column justify-content-end align-items-baseline h-100"
+      >
+        <div
+          *ngFor="let element of pageConfigs[page].elements"
+          [innerHTML]="element | safe: 'html'"
+          class="position-relative mb-5"
+          style="z-index: 2;"
+        ></div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="pageConfigs[page].meta?.type === _PageTypes.CODEONLY"
+      class="text-overlay px-3 text-center"
+    >
+      <video
+        *ngIf="video"
+        [autoplay]="autoplay"
+        muted
+        [loop]="loop"
+        class="video"
+        id="video"
+        (ended)="videoEnd()"
+        (click)="playPause()"
+      >
+        <source [src]="video" type="video/webm" />
+      </video>
+      <pre style="margin-top: 10rem; z-index: 2;" class="position-relative">
+        <code [languages]="language" [highlight]="code">
+      </code>
+      </pre>
+    </div>
+
+    <div
+      *ngIf="pageConfigs[page].meta?.type === _PageTypes.VIDEOONLY"
+      class="text-overlay text-center"
+    >
+      <video
+        *ngIf="video"
+        [autoplay]="autoplay"
+        muted
+        [loop]="loop"
+        class="video"
+        id="video"
+        (ended)="videoEnd()"
+        (click)="playPause()"
+      >
+        <source [src]="video" type="video/webm" />
+      </video>
+    </div>
+
+    <div
+      *ngIf="
+        pageConfigs[page].meta?.type === _PageTypes.TEXTONLY ||
+        pageConfigs[page].meta?.type === _PageTypes.TEXTIMAGE ||
+        pageConfigs[page].meta?.type === _PageTypes.TEXTVIDEO
+      "
+      class="page d-flex"
+      [ngClass]="{
+        'p-5': pageConfigs[page].meta?.type === _PageTypes.TEXTONLY,
+        'flex-row': imagePosition === _ImageOrVideoPosition.LEFT,
+        'flex-row': videoPosition === _ImageOrVideoPosition.LEFT,
+        'flex-row': codePosition === _ImageOrVideoPosition.LEFT,
+        'flex-row-reverse': imagePosition === _ImageOrVideoPosition.RIGHT,
+        'flex-row-reverse': videoPosition === _ImageOrVideoPosition.RIGHT,
+        'flex-row-reverse': codePosition === _ImageOrVideoPosition.RIGHT,
+        'flex-column': imagePosition === _ImageOrVideoPosition.TOP,
+        'flex-column': videoPosition === _ImageOrVideoPosition.TOP,
+        'flex-column': codePosition === _ImageOrVideoPosition.TOP,
+        'flex-column-reverse': imagePosition === _ImageOrVideoPosition.BOTTOM,
+        'flex-column-reverse': videoPosition === _ImageOrVideoPosition.BOTTOM,
+        'flex-column-reverse': codePosition === _ImageOrVideoPosition.BOTTOM
+      }"
+    >
+      <video
+        *ngIf="video"
+        [autoplay]="autoplay"
+        muted
+        [loop]="loop"
+        class="d-block"
+        [ngClass]="{
+          'pr-3': videoPosition === _ImageOrVideoPosition.LEFT,
+          'pl-3': videoPosition === _ImageOrVideoPosition.RIGHT,
+          'img-width': videoSize === _ImageOrVideoSizes.WIDTH,
+          'img-height': videoSize === _ImageOrVideoSizes.HEIGHT
+        }"
+        id="video"
+        (ended)="videoEnd()"
+        (click)="playPause()"
+      >
+        <source [src]="video" type="video/webm" />
+      </video>
+      <img
+        *ngIf="image"
+        [src]="image"
+        [alt]="imageAlt"
+        class="d-block"
+        [ngClass]="{
+          'pr-3': imagePosition === _ImageOrVideoPosition.LEFT,
+          'pl-3': imagePosition === _ImageOrVideoPosition.RIGHT,
+          'img-width': imageSize === _ImageOrVideoSizes.WIDTH,
+          'img-height': imageSize === _ImageOrVideoSizes.HEIGHT
+        }"
+      />
+      <code *ngIf="code" [languages]="codeLanguage" [highlight]="code"> </code>
+      <div class="d-flex flex-column justify-content-center">
+        <div
+          *ngFor="let element of pageConfigs[page].elements"
+          [innerHTML]="element"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div
+    class="w-100 bg-light d-flex justify-content-center align-items-center"
+    style="height: 75px;"
+  >
+    <img
+      *ngIf="backward"
+      src="../../../../assets/icons/fast-forward.svg"
+      class="control-img img-backward mr-3"
+      (click)="navigate('-')"
+    />
+    <img
+      *ngIf="play"
+      src="../../../../assets/icons/play.svg"
+      class="control-img mr-3"
+      (click)="playPause()"
+    />
+    <img
+      *ngIf="pause"
+      src="../../../../assets/icons/pause.svg"
+      class="control-img mr-3"
+      (click)="playPause()"
+    />
+    <img
+      *ngIf="redo"
+      src="../../../../assets/icons/repeat.svg"
+      class="control-img mr-3"
+    />
+    <img
+      *ngIf="forward"
+      src="../../../../assets/icons/fast-forward.svg"
+      (click)="navigate('+')"
+      class="control-img"
+    />
+    <img
+      src="../../../../assets/icons/maximize.svg"
+      class="control-img ml-3"
+      (click)="fullscreen()"
+    />
+  </div>
+</div>

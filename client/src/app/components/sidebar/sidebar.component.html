@@ -1,0 +1,86 @@
+<ng-sidebar-container style="height: 100vh; z-index: 3; position: fixed;">
+  <ng-sidebar
+    class="sidebar-primary"
+    [dock]="true"
+    [dockedSize]="'80px'"
+    [(opened)]="opened"
+    [closeOnClickOutside]="true"
+    (onOpenStart)="onOpenStart()"
+    (onCloseStart)="onCloseStart()"
+    [mode]="'push'"
+  >
+    <div class="d-flex" [ngClass]="{ 'flex-column-reverse': !opened }">
+      <a
+        class="lead d-flex align-items-center"
+        routerLink="/"
+        [ngClass]="opened ? 'mr-4' : 'justify-content-center'"
+        ><img
+          src="../../../assets/icons/codepen.svg"
+          alt="Logo"
+          class="icon-secondary"
+          [ngClass]="opened ? 'mr-1' : 'mt-2 mr-0'"
+        />
+        {{ sidebar.title }}</a
+      >
+      <button class="btn btn-secondary" (click)="opened = !opened">
+        <img [src]="icon" alt="Open Menu" />
+      </button>
+    </div>
+
+    <div class="divider"></div>
+    <a
+      routerLink="unittest"
+      class="text-light d-flex mb-2"
+      [ngClass]="{ 'justify-content-center': !opened }"
+      ><img
+        src="../../../assets/icons/cloud-drizzle.svg"
+        alt="Test unitaire"
+        class="icon-light"
+        [ngClass]="{ 'mr-2': opened }"
+      />{{ sidebar.link1 }}</a
+    >
+    <a
+      class="text-light d-flex"
+      [ngClass]="{ 'justify-content-center': !opened }"
+      ><img
+        src="../../../assets/icons/cloud-lightning.svg"
+        alt="Test de test unitaire"
+        class="mr-2 icon-light"
+        [ngClass]="{ 'mr-2': opened }"
+      />{{ sidebar.link2 }}</a
+    >
+    <div class="divider divider-secondary"></div>
+    <a
+      class="text-light d-flex"
+      [ngClass]="{ 'justify-content-center': !opened }"
+      ><img
+        src="../../../assets/icons/sun.svg"
+        alt="Test d'accessibilité"
+        class="mr-2 icon-light"
+        [ngClass]="{ 'mr-2': opened }"
+      />{{ sidebar.link3 }}</a
+    >
+    <div class="divider divider-secondary"></div>
+    <a
+      class="text-light d-flex"
+      [ngClass]="{ 'justify-content-center': !opened }"
+      ><img
+        src="../../../assets/icons/tool.svg"
+        alt="Test automatisé"
+        class="mr-2 icon-light"
+        [ngClass]="{ 'mr-2': opened }"
+      />{{ sidebar.link4 }}</a
+    >
+    <div class="divider"></div>
+    <a
+      class="text-light d-flex"
+      [ngClass]="{ 'justify-content-center': !opened }"
+      ><img
+        src="../../../assets/icons/github.svg"
+        alt="Mixte des sujets"
+        class="mr-2 icon-light"
+        [ngClass]="{ 'mr-2': opened }"
+      />{{ sidebar.link5 }}</a
+    >
+  </ng-sidebar>
+</ng-sidebar-container>
